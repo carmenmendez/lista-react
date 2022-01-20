@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import TodosCounter from './components/TodosCounter';
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class TodoList extends React.Component {
     return(
       <main>
         <div>
-          <p>Por hacer: {this.state.todos.length}</p>
+          <TodosCounter count={this.state.todos.length} />
           <input
             type="text" 
             value={this.state.newTodo} 
