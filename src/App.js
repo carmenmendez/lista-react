@@ -6,6 +6,11 @@ class TodoList extends React.Component {
     super(props) 
     this.state = {
       newTodo: '',
+      todos: [
+        'compra leche',
+        'lavar auto',
+        'pagar servicios',
+      ]
     }
   }
   render(){
@@ -24,8 +29,9 @@ class TodoList extends React.Component {
         </div>
         <div>
           <ul>
-            <li>Tarea <button>x</button></li>
-            <li>Tarea <button>x</button></li>
+            {this.state.todos.map((todo, index) => {
+              return <li key={index}>{todo} <button>x</button></li>
+            })}
           </ul>
         </div>
       </main>
