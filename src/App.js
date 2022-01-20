@@ -13,11 +13,20 @@ class TodoList extends React.Component {
       ]
     }
   }
+
+  handleAddTodo() {
+    // Duplicar todos para evitar mutación
+    // spread operator
+    const todosCopy = [...this.state.todos]
+    todosCopy.push(this.state.newTodo)
+    this.setState({ todos: todosCopy, newTodo: ''})
+  }
+
   render(){
     return(
       <main>
         <div>
-          <p>Por hacer: 0</p>
+          <p>Por hacer: {this.state.todos.length}</p>
           <input
             type="text" 
             value={this.state.newTodo} 
@@ -25,7 +34,7 @@ class TodoList extends React.Component {
               this.setState({ newTodo: event.target.value}) 
             }}
           />
-          <button>+</button>
+          <button onClick={() => this.handleAddTodo()}>+</button>
         </div>
         <div>
           <ul>
