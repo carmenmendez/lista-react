@@ -7,7 +7,6 @@ function TodoCreator(props) {
                 type="text" 
                 value={props.newTodo} 
                 onChange={(event) => {
-                    // this.setState({ newTodo: event.target.value}) 
                     props.onUpdateTodo(event.target.value)
                 }}
             />
