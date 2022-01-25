@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import TodosCounter from './components/TodosCounter';
+import TodoCreator from './components/TodoCreator';
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -8,11 +9,17 @@ class TodoList extends React.Component {
     this.state = {
       newTodo: '',
       todos: [
-        'compra leche',
-        'lavar auto',
+        'hacer postwork',
+        'revisar prewwork',
         'pagar servicios',
       ]
     }
+    this.onUpdateTodo = this.onUpdateTodo.bind(this)
+    this.handleAddTodo = this.handleAddTodo.bind(this)
+  }
+
+  onUpdateTodo(value) {
+    this.setState({ newTodo: value })
   }
 
   handleAddTodo() {
@@ -33,14 +40,11 @@ class TodoList extends React.Component {
       <main>
         <div>
           <TodosCounter count={this.state.todos.length} />
-          <input
-            type="text" 
-            value={this.state.newTodo} 
-            onChange={(event) => {
-              this.setState({ newTodo: event.target.value}) 
-            }}
+          <TodoCreator 
+            newTodo={this.state.newTodo}  
+            onUpdateTodo={this.onUpdateTodo}
+            handleAddTodo={this.handleAddTodo}
           />
-          <button onClick={() => this.handleAddTodo()}>+</button>
         </div>
         <div>
           <ul>
