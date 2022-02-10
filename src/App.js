@@ -18,19 +18,27 @@ const routes = () => {
 }
 
 function App() {
+  const todosStoredState = localStorage.getItem('todos') || '[]'
   const [newTodo, setNewTodo] = useState('')
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(JSON.parse(todosStoredState))
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
-      .then((response) => {
-        response.json().then((initialTodos) => {
-          setTodos(initialTodos)
+    if(todos.length === 0){
+      fetch('https://jsonplaceholder.typicode.com/todos')
+        .then((response) => {
+          response.json().then((initialTodos) => {
+            setPersistTodos(initialTodos)
+          })
         })
-      })
-      .catch((error) => {
-        console.log('Error pidiendo los todos ', error)
-      })
+        .catch((error) => {
+          console.log('Error pidiendo los todos ', error)
+        })
+    }
   }, [])
+
+  function setPersistTodos(todos){
+    localStorage.setItem('todos', JSON.stringify(todos))
+    setTodos(todos)
+  }
 
   function onUpdateTodo(value) {
     setNewTodo(value)
@@ -39,7 +47,7 @@ function App() {
     // Duplicar todos para evitar mutación con spread operator 
     const todosCopy = [...todos]
     todosCopy.push({ title: newTodo, completed: false })
-    setTodos(todosCopy)
+    setPersistTodos(todosCopy)
     setNewTodo('')
   }
   function handleRemoveTodo(index) {
@@ -49,7 +57,7 @@ function App() {
       return
     }
     const todosFiltered = todos.filter((_todo, i) => i !== index);
-    setTodos(todosFiltered)
+    setPersistTodos(todosFiltered)
   }
   function handleToggleTodo(index) {
     const markedTodos = todos.map((todo, todoIndex) => {
@@ -59,7 +67,7 @@ function App() {
       }
       return todo;
     })
-    setTodos(markedTodos)
+    setPersistTodos(markedTodos)
   }
   return (
     <div className="App">
