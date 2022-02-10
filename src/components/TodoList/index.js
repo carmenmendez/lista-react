@@ -7,11 +7,26 @@ function TodoList() {
     const [todos, setTodos] = useState([])
     useEffect(() => {
         const initialTodos = [
-            'hacer ejercicio',
-            'tender la cama',
-            'desayunar',
-            'estudiar',
-            'hacer postwork'
+            {
+                list: 'hacer ejercicio',
+                done: false
+            },
+            {
+                list: 'tender la cama',
+                done: false
+            },
+            {
+                list: 'desayunar',
+                done: false
+            },
+            {
+                list: 'estudiar',
+                done: false
+            },
+            {
+                list: 'hacer postwork',
+                done: false
+            }
         ]
         setTodos(initialTodos)
     }, [])
@@ -22,7 +37,7 @@ function TodoList() {
     function handleAddTodo() {
         // Duplicar todos para evitar mutación con spread operator 
         const todosCopy = [...todos]
-        todosCopy.push(newTodo)
+        todosCopy.push({ list: newTodo, done: false})
         setTodos(todosCopy)
         setNewTodo('')
     }
@@ -35,11 +50,21 @@ function TodoList() {
         const todosFiltered = todos.filter((_todo, i) => i !== index);
         setTodos(todosFiltered)
     }
+    function handleToggleTodo(index) {
+        const markedTodos = todos.map( (todo, todoIndex) => {
+            if(todoIndex === index) {
+                // return { ...list, done: !todo.done } spread operator to clone each field
+                return { list: todo.list, done: !todo.done }
+            }
+            return todo;
+        })
+        setTodos(markedTodos)
+    }
 
     return (
         <main>
             <div>
-                <TodosCounter count={todos.length} />
+                <TodosCounter count={todos.filter((todo) => !todo.done ).length} />
                 <TodoCreator
                     newTodo={newTodo}
                     onUpdateTodo={onUpdateTodo}
@@ -49,7 +74,11 @@ function TodoList() {
             <div>
                 <ul>
                     {todos.map((todo, index) => {
-                        return <li key={index}>{todo} <button onClick={() => { handleRemoveTodo(index) }}>x</button></li>
+                        return <li
+                                 style={ {textDecoration: todo.done ? 'line-through' : 'none'} }
+                                 key={index}>
+                                     {todo.list} <button onClick={() => { handleToggleTodo(index) }}>✅</button> <button onClick={() => { handleRemoveTodo(index) }}>🗑</button>
+                               </li>
                     })}
                 </ul>
             </div>
