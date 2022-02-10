@@ -14,7 +14,7 @@ function TodoList({
     return (
         <main>
             <div>
-                <TodosCounter count={todos.filter((todo) => !todo.done).length} />
+                <TodosCounter count={todos.filter((todo) => !todo.completed).length} />
                 <TodoCreator
                     newTodo={newTodo}
                     onUpdateTodo={onUpdateTodo}
@@ -25,9 +25,9 @@ function TodoList({
                 <ul>
                     {todos.map((todo, index) => {
                         return <li
-                            style={{ textDecoration: todo.done ? 'line-through' : 'none' }}
+                            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
                             key={index}>
-                            {todo.list} <button onClick={() => { handleToggleTodo(index) }}>✅</button> <button onClick={() => { handleRemoveTodo(index) }}>🗑</button>
+                            {todo.title} <button onClick={() => { handleToggleTodo(index) }}>✅</button> <button onClick={() => { handleRemoveTodo(index) }}>🗑</button>
                         </li>
                     })}
                 </ul>

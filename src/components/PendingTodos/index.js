@@ -1,11 +1,11 @@
 import React from "react";
 
 const PendingTodos = ({ todos = [] }) => {
-    const pendingTodos = todos.filter((todo) => !todo.done)
+    const pendingTodos = todos.filter((todo) => !todo.completed)
     return (
         <div>
             <ul>
-                {pendingTodos.map((pendingTodo) => <li>{pendingTodo.list}</li>)}
+                {pendingTodos.map((pendingTodo, index) => <li key={index}>{pendingTodo.title}</li>)}
             </ul>
         </div>
     );

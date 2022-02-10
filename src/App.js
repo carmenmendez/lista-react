@@ -23,24 +23,24 @@ function App() {
   useEffect(() => {
     const initialTodos = [
       {
-        list: 'hacer ejercicio',
-        done: false
+        title: 'hacer ejercicio',
+        completed: false
       },
       {
-        list: 'tender la cama',
-        done: false
+        title: 'tender la cama',
+        completed: false
       },
       {
-        list: 'desayunar',
-        done: false
+        title: 'desayunar',
+        completed: false
       },
       {
-        list: 'estudiar',
-        done: false
+        title: 'estudiar',
+        completed: false
       },
       {
-        list: 'hacer postwork',
-        done: false
+        title: 'hacer postwork',
+        completed: false
       }
     ]
     setTodos(initialTodos)
@@ -52,7 +52,7 @@ function App() {
   function handleAddTodo() {
     // Duplicar todos para evitar mutación con spread operator 
     const todosCopy = [...todos]
-    todosCopy.push({ list: newTodo, done: false })
+    todosCopy.push({ title: newTodo, completed: false })
     setTodos(todosCopy)
     setNewTodo('')
   }
@@ -68,8 +68,8 @@ function App() {
   function handleToggleTodo(index) {
     const markedTodos = todos.map((todo, todoIndex) => {
       if (todoIndex === index) {
-        // return { ...list, done: !todo.done } spread operator to clone each field
-        return { list: todo.list, done: !todo.done }
+        // return { ...title, completed: !todo.completed } spread operator to clone each field
+        return { title: todo.title, completed: !todo.completed }
       }
       return todo;
     })
