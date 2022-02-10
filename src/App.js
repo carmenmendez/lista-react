@@ -5,18 +5,6 @@ import PendingTodos from './components/PendingTodos';
 import CompletedTodos from './components/CompletedTodos';
 import NotFound from './components/NotFound';
 
-const routes = () => {
-  return (
-    <BrowserRouter>
-      <div>
-        <App />
-        <Route exact path="/pending" component={PendingTodos} />
-        <Route exact path="/completed" component={CompletedTodos} />
-      </div>
-    </BrowserRouter>
-  )
-}
-
 function App() {
   const [newTodo, setNewTodo] = useState('')
   const [todos, setTodos] = useState([])
