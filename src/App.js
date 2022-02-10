@@ -21,29 +21,15 @@ function App() {
   const [newTodo, setNewTodo] = useState('')
   const [todos, setTodos] = useState([])
   useEffect(() => {
-    const initialTodos = [
-      {
-        title: 'hacer ejercicio',
-        completed: false
-      },
-      {
-        title: 'tender la cama',
-        completed: false
-      },
-      {
-        title: 'desayunar',
-        completed: false
-      },
-      {
-        title: 'estudiar',
-        completed: false
-      },
-      {
-        title: 'hacer postwork',
-        completed: false
-      }
-    ]
-    setTodos(initialTodos)
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then((response) => {
+        response.json().then((initialTodos) => {
+          setTodos(initialTodos)
+        })
+      })
+      .catch((error) => {
+        console.log('Error pidiendo los todos ', error)
+      })
   }, [])
 
   function onUpdateTodo(value) {
