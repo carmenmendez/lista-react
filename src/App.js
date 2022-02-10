@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import TodoList from './components/TodoList'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import TodoList from './components/TodoList';
+import PendingTodos from './components/PendingTodos';
+import CompletedTodos from './components/CompletedTodos';
+import NotFound from './components/NotFound';
+
+const routes = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <App />
+        <Route exact path="/pending" component={PendingTodos} />
+        <Route exact path="/completed" component={CompletedTodos} />
+      </div>
+    </BrowserRouter>
+  )
+}
 
 function App() {
   const [newTodo, setNewTodo] = useState('')
@@ -62,14 +77,36 @@ function App() {
   }
   return (
     <div className="App">
-      <TodoList
-        todos={todos}
-        newTodo={newTodo}
-        onUpdateTodo={onUpdateTodo}
-        handleAddTodo={handleAddTodo}
-        handleRemoveTodo={handleRemoveTodo}
-        handleToggleTodo={handleToggleTodo}
-      />
+      <BrowserRouter>
+        <nav>
+          <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+            <li>
+              <Link to="/">TODOs</Link>
+            </li>
+            <li>
+              <Link to="/completed">Completed</Link>
+            </li>
+            <li>
+              <Link to="/pending">Pending</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path='/' exact element={
+            <TodoList
+              todos={todos}
+              newTodo={newTodo}
+              onUpdateTodo={onUpdateTodo}
+              handleAddTodo={handleAddTodo}
+              handleRemoveTodo={handleRemoveTodo}
+              handleToggleTodo={handleToggleTodo}
+            />
+          } />
+          <Route path='/pending' element={<PendingTodos todos={todos} />} />
+          <Route path='/completed' element={<CompletedTodos todos={todos} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
